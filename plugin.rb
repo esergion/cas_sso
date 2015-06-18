@@ -24,12 +24,8 @@ class CASAuthenticator < ::Auth::Authenticator
     #if the email address is set in the extra attributes and we know the accessor use it here
     email = auth_token[:extra][SiteSetting.cas_sso_email] if (auth_token[:extra] && auth_token[:extra][SiteSetting.cas_sso_email])
     #if we could not get the email address from the extra attributes try to set it base on the username
-    email ||= unless SiteSetting.cas_sso_email_domain.nil?
-                "#{auth_token[:uid]}@#{SiteSetting.cas_sso_email_domain}"
-              else
-                auth_token[:uid]
-              end
-
+    email ||= auth_token[:uid]
+    
     result.email = email
     result.email_valid = true
 
